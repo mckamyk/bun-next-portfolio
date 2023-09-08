@@ -2,7 +2,7 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {httpBatchLink} from '@trpc/client'
 import { useState } from 'react'
-import {trpc} from '@/trpc'
+import {trpc} from '@/trpc/client'
 
 export const Provider: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [queryClient] = useState(() => new QueryClient())

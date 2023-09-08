@@ -1,6 +1,6 @@
 import {fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import {TrpcContext, appRouter} from '@/trpcServer'
-import { getServerActionSession } from '@/tools/session'
+import {Context, appRouter} from '@/trpc/trpcServer'
+import { getServerSession } from '@/tools/session'
 import { NextApiHandler } from 'next'
 
 const handler: NextApiHandler = (request) => {
@@ -8,8 +8,8 @@ const handler: NextApiHandler = (request) => {
     endpoint: '/api/trpc',
     req: request as unknown as Request,
     router: appRouter,
-    createContext: async function(): Promise<TrpcContext> {
-      const session = await getServerActionSession();
+    createContext: async function(): Promise<Context> {
+      const session = await getServerSession();
       return {session}
     }
   })
