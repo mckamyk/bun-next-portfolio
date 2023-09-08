@@ -1,14 +1,12 @@
-import {appRouter} from '@/trpcServer'
+import { getNonce } from './serverActions';
 
 export default async function() {
-  const caller = appRouter.createCaller({});
-
-  const val = await caller.test()
+  const nonce = await getNonce();
 
   return (
     <div className="outline outline-red-600 rounded-md p-2 my-2">
       <div>This is a server component</div>
-      <div>result: {val}</div>
+      <div>nonce: {nonce}</div>
     </div>
   )
 }

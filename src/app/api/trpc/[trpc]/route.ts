@@ -1,15 +1,15 @@
-import {fetchRequestHandler, FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch'
+import {fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import {TrpcContext, appRouter} from '@/trpcServer'
-import { getSession } from '@/tools/session'
+import { getServerActionSession } from '@/tools/session'
+import { NextApiHandler } from 'next'
 
-const handler = (request: Request) => {
-  console.log(`Incoming trpc request ${request.url}`)
+const handler: NextApiHandler = (request) => {
   return fetchRequestHandler({
     endpoint: '/api/trpc',
-    req: request,
+    req: request as unknown as Request,
     router: appRouter,
-    createContext: async function(opts: FetchCreateContextFnOptions): Promise<TrpcContext> {
-      const session = await getSession(request)
+    createContext: async function(): Promise<TrpcContext> {
+      const session = await getServerActionSession();
       return {session}
     }
   })

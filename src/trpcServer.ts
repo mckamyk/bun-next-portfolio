@@ -10,14 +10,17 @@ export type TrpcContext = {
 const t = initTRPC.context<TrpcContext>().create();
 
 export const appRouter = t.router({
-  nonce: t.procedure.output(z.string()).query(({ctx}) => {
+  reset: t.procedure.output(z.void()).mutation(async ({ctx}) => ctx.session.destroy()),
+  nonce: t.procedure.output(z.string()).query(async ({ctx}) => {
     const {session} = ctx
+    if (session.user?.nonce) return session.user.nonce
     const n = generateNonce()
     if (!session.user) session.user = {}
     session.user.nonce = n
-    session.save()
+    await session.save()
     return n
   })
 })
 
 export type AppRouter = typeof appRouter
+
