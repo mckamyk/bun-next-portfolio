@@ -16,7 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className="flex justify-center bg-slate-900 h-screen">
+          <div className="w-[800px] mt-16">
+            {children}
+          </div>
+        </main>
+      </body>
     </html>
   )
 }

@@ -15,6 +15,7 @@ export const Provider: React.FC<{children: React.ReactNode}> = ({children}) => {
       ]
     })
   )
+
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
